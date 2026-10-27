@@ -8,7 +8,8 @@
   --acento: #ffb8ab;
   --linha: rgba(247, 239, 233, .14);
   --raio: 14px;
-  --sans: 'Poppins', system-ui, Arial, sans-serif;
+  --mono: 'Space Mono', ui-monospace, monospace;
+  --sans: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
 * { box-sizing: border-box; }
