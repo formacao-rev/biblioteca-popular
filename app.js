@@ -244,19 +244,49 @@ $('#paginacao').addEventListener('click', (e) => {
 });
 
 // detalhe em janela
+// Converte o link em um endereço que pode ser exibido dentro da página
+function urlPreviaPdf(url) {
+  if (!url) return null;
+  const drive = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
+  if (/\.pdf(\?|#|$)/i.test(url)) return url;
+  return null;
+}
+
 function abrirDetalhe(o) {
-  const tags = (o.tags || []).map((t) => `<span class="etiqueta">${esc(t)}</span>`).join('');
+  const descricao = esc(o.descricao || '').replace(/\n\s*\n/g, '<br><br>').replace(/\n/g, '<br>');
+  const yt = idYoutube(o.link);
+  const pdf = urlPreviaPdf(o.link);
+
+  let previa = '';
+  if (yt) {
+    previa = `
+      <div class="previa" id="previa-obra">
+        <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="">
+        <button type="button" class="play" data-yt="${yt}">▶ assistir aqui</button>
+      </div>`;
+  } else if (pdf) {
+    previa = `
+      <div class="previa pdf">
+        <iframe src="${esc(pdf)}" title="${esc(o.titulo)}" loading="lazy"></iframe>
+      </div>`;
+  }
+
+  const rotuloBotao = yt ? 'abrir no YouTube' : pdf ? 'abrir PDF em tela cheia' : 'abrir obra';
+  const botao = o.link ? `
+    <a class="botao-grande" href="${esc(o.link)}" target="_blank" rel="noopener">
+      <span>${rotuloBotao}</span>
+      <span aria-hidden="true">→</span>
+    </a>` : '';
+
   $('#detalhe-corpo').innerHTML = `
     <p class="card-tipo">${esc((o.tipo || '').toLowerCase())}</p>
     <h2>${esc(o.titulo)}</h2>
     <p class="det-autor">${esc(o.autor || '')}</p>
-    <dl class="det-lista">
-      ${o.ano != null ? `<div><dt>ano</dt><dd>${esc(fmtAno(o.ano))}</dd></div>` : ''}
-      ${o.tema ? `<div><dt>assunto</dt><dd>${esc(o.tema)}${o.subtema ? ' · ' + esc(o.subtema) : ''}</dd></div>` : ''}
-      ${o.idioma ? `<div><dt>idioma</dt><dd>${esc(o.idioma)}</dd></div>` : ''}
-    </dl>
-    ${tags ? `<div class="etiquetas">${tags}</div>` : ''}
-    ${o.link ? `<a class="botao" href="${esc(o.link)}" target="_blank" rel="noopener">abrir</a>` : ''}`;
+    ${previa}
+    ${descricao ? `<p class="det-descricao">${descricao}</p>` : ''}
+    ${botao}`;
+
   $('#detalhe').showModal();
 }
 $('#grade').addEventListener('click', (e) => {
