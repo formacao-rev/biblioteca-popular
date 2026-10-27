@@ -46,26 +46,26 @@
     "destaque": true
   },
   {
-    "titulo": "Summa Logicae",
-    "autor": "Guilherme de Ockham",
-    "ano": 1323,
-    "tema": "Filosofia",
-    "subtema": "Lógica medieval",
-    "tipo": "Livro",
-    "idioma": "Latim",
-    "tags": ["lógica", "nominalismo"],
-    "link": ""
-  },
-  {
-    "titulo": "O Capital (Livro I)",
-    "autor": "Karl Marx",
-    "ano": 1867,
-    "tema": "Marxismo",
-    "subtema": "Economia política",
+    "titulo": "Contra o Pessimismo",
+    "autor": "Antônio Gramsci",
+    "ano": 1924,
+    "tema": "Texto",
+    "subtema": "Agitação",
     "tipo": "Livro",
     "idioma": "Português",
-    "tags": ["mercadoria", "mais-valia"],
-    "link": "",
+    "tags": ["Agitação", "Militância"],
+    "link": "https://drive.google.com/file/d/1oU8VTivDkml8KHO7yZPVTm0Obb3kuyFQ/view?usp=sharing"
+  },
+  {
+    "titulo": "O Papel do Indivíduo na História",
+    "autor": "G. V. Plekhanov",
+    "ano": 1898,
+    "tema": "Marxismo",
+    "subtema": "Filosofia",
+    "tipo": "Livro",
+    "idioma": "Português",
+    "tags": ["materialismo", "história"],
+    "link": "https://drive.google.com/file/d/1m8UiRsgvJuR6ueKgc_4LpFoC1UViEFGW/view?usp=sharing",
     "destaque": true
   },
   {
@@ -77,6 +77,7 @@
     "tipo": "Panfleto",
     "idioma": "Português",
     "tags": ["luta de classes"],
-    "link": "https://www.youtube.com/watch?v=euQJeYKTM-k"
+    "link": "https://drive.google.com/file/d/1Nup38j3BYw7KGz0JC4t5PxKYhHyw1oeL/view?usp=sharing"
+    "destaque": true
   }
 ]
