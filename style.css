@@ -209,3 +209,8 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
 .det-lista dt {
   font-family: var(--sans);
 }
+.aba {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
