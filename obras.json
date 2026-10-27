@@ -37,7 +37,7 @@
     "titulo": "Sectarismo e Espontaneísmo",
     "autor": "Diógenes Arruda",
     "ano": 1978,
-    "tema": "Texto",
+    "tema": "Marxismo",
     "subtema": "Agitação",
     "tipo": "Panfleto",
     "idioma": "Português",
@@ -49,7 +49,7 @@
     "titulo": "Contra o Pessimismo",
     "autor": "Antônio Gramsci",
     "ano": 1924,
-    "tema": "Texto",
+    "tema": "Marxismo",
     "subtema": "Agitação",
     "tipo": "Panfleto",
     "idioma": "Português",
@@ -80,5 +80,40 @@
     "tags": ["luta de classes"],
     "link": "https://drive.google.com/file/d/1Nup38j3BYw7KGz0JC4t5PxKYhHyw1oeL/view?usp=sharing",
     "destaque": true
-  }
+  },
+  {
+    "titulo": "Introdução ao Método de Marx - Parte I",
+    "autor": "José Paulo Netto",
+    "ano": 2016,
+    "tema": "Marxismo",
+    "subtema": "Método",
+    "tipo": "Videoaula",
+    "idioma": "Português",
+    "tags": ["José Paulo Netto", "Marxismo", "Método de Marx"],
+    "link": "https://youtu.be/2WndNoqRiq8?list=PLeRGxonyfMYVwgWH1bNcg-Oune8hKYtUQ",
+    "destaque": false
+  },
+  {
+    "titulo": "Introdução ao Método de Marx - Parte II",
+    "autor": "José Paulo Netto",
+    "ano": 2016,
+    "tema": "Marxismo",
+    "subtema": "Método",
+    "tipo": "Videoaula",
+    "idioma": "Português",
+    "tags": ["José Paulo Netto", "Marxismo", "Método de Marx"],
+    "link": "https://youtu.be/Dl3Yocu-1oI?list=PLeRGxonyfMYVwgWH1bNcg-Oune8hKYtUQ",
+    "destaque": false
+  },
+  {
+    "titulo": "A Formação do Capital e o Seu Desenvolvimento",
+    "autor": "Leônidas de Resende",
+    "ano": 2016,
+    "tema": "Marxismo",
+    "subtema": "Teses sobre a Teoria de Marx",
+    "tipo": "Livro",
+    "idioma": "Português",
+    "tags": ["Positivismo", "Teoria Marxista"],
+    "link": "https://drive.google.com/file/d/1ta0G6ov5-TXiLscFca9ohrEtogxbB03t/view?usp=sharing",
+    "destaque": false
 ]
