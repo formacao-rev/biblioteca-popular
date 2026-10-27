@@ -43,7 +43,7 @@
     "idioma": "Português",
     "tags": ["dialética", "consciência"],
     "link": "",
-    "destaque": true
+    "destaque": false
   },
   {
     "titulo": "Contra o Pessimismo",
@@ -51,10 +51,11 @@
     "ano": 1924,
     "tema": "Texto",
     "subtema": "Agitação",
-    "tipo": "Livro",
+    "tipo": "Panfleto",
     "idioma": "Português",
     "tags": ["Agitação", "Militância"],
     "link": "https://drive.google.com/file/d/1oU8VTivDkml8KHO7yZPVTm0Obb3kuyFQ/view?usp=sharing"
+    "destaque": true
   },
   {
     "titulo": "O Papel do Indivíduo na História",
