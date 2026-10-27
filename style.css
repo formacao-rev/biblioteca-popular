@@ -191,3 +191,21 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
   .grade { grid-template-columns: 1fr 1fr; gap: 10px; }
   .card { padding: 14px; }
 }
+/* Elementos grandes usam a fonte monoespaçada */
+.aula h1,
+.detalhe h2,
+.card-titulo,
+.modulo summary,
+.aula-item {
+  font-family: var(--mono);
+}
+
+/* Rótulos pequenos ficam em Poppins */
+.card-tipo,
+.tipo-aula,
+.rotulo-filtro,
+.migalha,
+.contagem,
+.det-lista dt {
+  font-family: var(--sans);
+}
