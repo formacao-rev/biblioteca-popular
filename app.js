@@ -9,6 +9,30 @@ const pt = new Intl.Collator('pt-BR', { sensitivity: 'base' });
 const fmtAno = (a) => (a == null ? '' : a < 0 ? `${-a} a.C.` : String(a));
 
 /* =====================================================
+   LINKS: YouTube e PDF
+   ===================================================== */
+
+// YouTube: aceita youtube.com/watch?v=, youtu.be/ e youtube.com/embed/
+function idYoutube(url) {
+  const m = (url || '').match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
+  return m ? m[1] : null;
+}
+
+// Converte link do Drive ou arquivo .pdf em endereço que pode ser exibido na página
+function urlPreviaPdf(url) {
+  if (!url) return null;
+  const drive = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
+  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
+  if (/\.pdf(\?|#|$)/i.test(url)) return url;
+  return null;
+}
+
+// Troca a capa do vídeo pelo player do YouTube (usado na aula e na janela de detalhe)
+function carregarVideo(container, id) {
+  container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="Vídeo"></iframe>`;
+}
+
+/* =====================================================
    ABAS
    ===================================================== */
 document.querySelectorAll('[data-aba]').forEach((b) => b.addEventListener('click', () => {
@@ -23,15 +47,8 @@ document.querySelectorAll('[data-aba]').forEach((b) => b.addEventListener('click
    Estrutura: módulos > aulas. Cada aula é "texto", "video" ou "pdf".
    ===================================================== */
 let aulasPlanas = [];   // ordem linear para anterior/próxima
-let cursoDados = [];
 
 const ICONE = { texto: 'Texto', video: 'Vídeo', pdf: 'PDF' };
-
-// YouTube: aceita youtube.com/watch?v=, youtu.be/ e youtube.com/embed/
-function idYoutube(url) {
-  const m = (url || '').match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]{11})/);
-  return m ? m[1] : null;
-}
 
 function renderTrilha(modulos) {
   $('#trilha').innerHTML = modulos.map((m) => `
@@ -65,17 +82,25 @@ function mostrarAula(chave) {
           <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="">
           <button type="button" class="play" data-yt="${yt}">▶ assistir aqui</button>
         </div>
-        <a class="botao" href="${esc(aula.url)}" target="_blank" rel="noopener">abrir no YouTube</a>`;
+        <a class="botao-grande" href="${esc(aula.url)}" target="_blank" rel="noopener">
+          <span>abrir no YouTube</span><span aria-hidden="true">→</span>
+        </a>`;
     } else if (aula.url) {
-      corpo = `<a class="botao" href="${esc(aula.url)}" target="_blank" rel="noopener">abrir vídeo</a>`;
+      corpo = `
+        <a class="botao-grande" href="${esc(aula.url)}" target="_blank" rel="noopener">
+          <span>abrir vídeo</span><span aria-hidden="true">→</span>
+        </a>`;
     } else {
       corpo = `<p class="pendente">Link do vídeo ainda não adicionado.</p>`;
     }
   } else if (aula.tipo === 'pdf') {
+    const pdf = urlPreviaPdf(aula.url);
     if (aula.url) {
       corpo = `
-        <div class="previa pdf"><iframe src="${esc(aula.url)}" title="${esc(aula.titulo)}" loading="lazy"></iframe></div>
-        <a class="botao" href="${esc(aula.url)}" target="_blank" rel="noopener">abrir PDF em tela cheia</a>`;
+        ${pdf ? `<div class="previa pdf"><iframe src="${esc(pdf)}" title="${esc(aula.titulo)}" loading="lazy"></iframe></div>` : ''}
+        <a class="botao-grande" href="${esc(aula.url)}" target="_blank" rel="noopener">
+          <span>abrir PDF em tela cheia</span><span aria-hidden="true">→</span>
+        </a>`;
     } else {
       corpo = `<p class="pendente">Arquivo ainda não adicionado.</p>`;
     }
@@ -103,10 +128,7 @@ $('#trilha').addEventListener('click', (e) => {
 });
 $('#aula').addEventListener('click', (e) => {
   const play = e.target.closest('.play');
-  if (play) {
-    $('#previa').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${play.dataset.yt}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="Vídeo"></iframe>`;
-    return;
-  }
+  if (play) { carregarVideo($('#previa'), play.dataset.yt); return; }
   const seta = e.target.closest('.seta');
   if (seta) mostrarAula(seta.dataset.id);
 });
@@ -114,7 +136,6 @@ $('#aula').addEventListener('click', (e) => {
 fetch('curso.json')
   .then((r) => r.json())
   .then((modulos) => {
-    cursoDados = modulos;
     aulasPlanas = modulos.flatMap((m) =>
       m.aulas.map((a) => ({ chave: `${m.id}-${a.id}`, aula: a, modulo: m })));
     renderTrilha(modulos);
@@ -138,11 +159,12 @@ const periodoDe = (a) => (a == null ? '' : (PERIODOS.find(([, i, f]) => a >= i &
 let obras = [];
 const S = { q: '', tema: '', tipo: '', periodo: '', ord: 'titulo', pagina: 1 };
 
-function passa(o) {
-  if (S.q && !S.q.split(/\s+/).every((w) => o._busca.includes(w))) return false;
-  if (S.tema && o.tema !== S.tema) return false;
-  if (S.tipo && o.tipo !== S.tipo) return false;
-  if (S.periodo && o._periodo !== S.periodo) return false;
+// verdadeiro se a obra passa em todos os filtros ativos, exceto os indicados em "ignorar"
+function passa(o, ignorar = '') {
+  if (ignorar !== 'q' && S.q && !S.q.split(/\s+/).every((w) => o._busca.includes(w))) return false;
+  if (ignorar !== 'tema' && S.tema && o.tema !== S.tema) return false;
+  if (ignorar !== 'tipo' && S.tipo && o.tipo !== S.tipo) return false;
+  if (ignorar !== 'periodo' && S.periodo && o._periodo !== S.periodo) return false;
   return true;
 }
 
@@ -162,14 +184,7 @@ function contar(campo) {
   for (const o of obras) {
     const v = campo === 'periodo' ? o._periodo : o[campo];
     if (!v) continue;
-    const outros = { ...S, [campo === 'periodo' ? 'periodo' : campo]: '' };
-    const ok = obras.length && [
-      !outros.q || outros.q.split(/\s+/).every((w) => o._busca.includes(w)),
-      !outros.tema || o.tema === outros.tema,
-      !outros.tipo || o.tipo === outros.tipo,
-      !outros.periodo || o._periodo === outros.periodo,
-    ].every(Boolean);
-    if (ok) m.set(v, (m.get(v) || 0) + 1);
+    if (passa(o, campo)) m.set(v, (m.get(v) || 0) + 1);
   }
   return m;
 }
@@ -184,7 +199,8 @@ function chips(grupo, campo, valores, atual) {
 function renderFiltros() {
   const temas = [...contar('tema')].sort((a, b) => pt.compare(a[0], b[0]));
   const tipos = [...contar('tipo')].sort((a, b) => pt.compare(a[0], b[0]));
-  const periodos = PERIODOS.map(([p]) => [p, contar('periodo').get(p) || 0]).filter(([, n]) => n);
+  const periodosCont = contar('periodo');
+  const periodos = PERIODOS.map(([p]) => [p, periodosCont.get(p) || 0]).filter(([, n]) => n);
   $('#filtros').innerHTML =
     chips('assunto', 'tema', temas, S.tema) +
     chips('tipo', 'tipo', tipos, S.tipo) +
@@ -204,7 +220,7 @@ function cardHTML(o) {
 }
 
 function renderGrade() {
-  const lista = ordenar(obras.filter(passa));
+  const lista = ordenar(obras.filter((o) => passa(o)));
   const paginas = Math.max(1, Math.ceil(lista.length / POR_PAGINA));
   if (S.pagina > paginas) S.pagina = paginas;
   const ini = (S.pagina - 1) * POR_PAGINA;
@@ -243,16 +259,9 @@ $('#paginacao').addEventListener('click', (e) => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// detalhe em janela
-// Converte o link em um endereço que pode ser exibido dentro da página
-function urlPreviaPdf(url) {
-  if (!url) return null;
-  const drive = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
-  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
-  if (/\.pdf(\?|#|$)/i.test(url)) return url;
-  return null;
-}
-
+/* =====================================================
+   JANELA DE DETALHE DA OBRA
+   ===================================================== */
 function abrirDetalhe(o) {
   const descricao = esc(o.descricao || '').replace(/\n\s*\n/g, '<br><br>').replace(/\n/g, '<br>');
   const yt = idYoutube(o.link);
@@ -289,12 +298,19 @@ function abrirDetalhe(o) {
 
   $('#detalhe').showModal();
 }
+
 $('#grade').addEventListener('click', (e) => {
   const b = e.target.closest('.card');
   if (b) abrirDetalhe(obras[Number(b.dataset.i)]);
 });
 $('#fechar').addEventListener('click', () => $('#detalhe').close());
-$('#detalhe').addEventListener('click', (e) => { if (e.target.id === 'detalhe') e.target.close(); });
+
+// clique fora da janela fecha; clique no botão de play carrega o vídeo
+$('#detalhe').addEventListener('click', (e) => {
+  if (e.target.id === 'detalhe') { e.target.close(); return; }
+  const play = e.target.closest('.play');
+  if (play) carregarVideo($('#previa-obra'), play.dataset.yt);
+});
 
 fetch('obras.json')
   .then((r) => r.json())
@@ -307,4 +323,7 @@ fetch('obras.json')
     }));
     atualizarBib();
   })
-  .catch(() => { $('#vazio').hidden = false; $('#vazio').textContent = 'Não foi possível carregar obras.json.'; });
+  .catch(() => {
+    $('#vazio').hidden = false;
+    $('#vazio').textContent = 'Não foi possível carregar obras.json.';
+  });
