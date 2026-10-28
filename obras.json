@@ -114,6 +114,7 @@
     "autor": "Leônidas de Resende",
     "ano": 2016,
     "tema": "Marxismo",
+    "capa": "capas/livrocapa_20230310111508_309861195.jpg",
     "subtema": "Teses sobre a Teoria de Marx",
     "tipo": "Livro",
     "idioma": "Português",
@@ -186,6 +187,7 @@
     "autor": "V. I. Lenin",
     "ano": 1902,
     "tema": "Marxismo",
+    "capa": "capas/quefazer.jpg",
     "subtema": "Partido revolucionário",
     "tipo": "Livro",
     "idioma": "Português",
@@ -210,6 +212,7 @@
     "ano": 1937,
     "tema": "Marxismo",
     "subtema": "Filosofia",
+    "capa": "capas/capa-PRATICA2-scaled.png",
     "tipo": "Livro",
     "idioma": "Português",
     "tags": ["Mao Zedong", "dialética", "filosofia"],
@@ -246,6 +249,7 @@
     "tema": "Marxismo",
     "subtema": "Família e Estado",
     "tipo": "Livro",
+    "capa": "capas/91G8nfIZgBL._UF1000,1000_QL80_.jpg",
     "idioma": "Português",
     "tags": ["Engels", "família", "Estado", "propriedade privada"],
     "link": "https://drive.google.com/file/d/1UbjR0vZoqsrbSKIjeijLB5yYD_KL5Wxr/view?usp=sharing"
@@ -329,7 +333,7 @@
     "tema": "Marxismo",
     "subtema": "Teoria da dependência",
     "tipo": "Livro",
-    "capa": "capas/ruymauro.png",
+    "capa": "capas/ruymaro.png",
     "idioma": "Português",
     "tags": ["Marini", "dependência", "América Latina"],
     "link": "https://drive.google.com/file/d/1GHXzilOjyldjZD_OjtvRQ_6KviuXR7S_/view?usp=sharing"
@@ -341,6 +345,7 @@
     "tema": "Movimento operário",
     "subtema": "Sindicalismo",
     "tipo": "Livro",
+    "capa": "capas/Capa Vermelha dos Sindicatos Brasileiros.png",
     "idioma": "Português",
     "tags": ["sindicatos", "Brasil", "classe trabalhadora"],
     "link": "https://drive.google.com/file/d/1z9D7ngP4v7X1eyDijHCb12yvMzrPC_Ul/view?usp=sharing"
@@ -349,6 +354,7 @@
     "titulo": "O Brasil fora do armário: diversidade sexual",
     "autor": "Leonardo Nogueira, Maysa Pereira e Rafael Toitio (org.)",
     "ano": 2020,
+    "capa": "capas/brforadoarmario-11jan21.png",
     "tema": "Sociedade",
     "subtema": "Diversidade sexual",
     "tipo": "Livro",
@@ -388,6 +394,7 @@
     "subtema": "Materialismo histórico",
     "tipo": "Livro",
     "idioma": "Português",
+    "capa": "capas/81thPJkLr2L._UF1000,1000_QL80_.jpg",
     "tags": ["materialismo histórico", "Marx", "Engels"],
     "link": "https://drive.google.com/file/d/1IjNpKe-PtToV0hJe5-tYGNIwOgoPRlBm/view?usp=sharing"
   }
