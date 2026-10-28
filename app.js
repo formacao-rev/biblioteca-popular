@@ -1,5 +1,5 @@
 /* Site da biblioteca: curso (módulos e aulas) + biblioteca (grade paginada).
-   Curso em curso.json · Acervo em obras.json */
+   Configuração em config.json · Curso em curso.json · Acervo em obras.json */
 
 const $ = (s) => document.querySelector(s);
 const norm = (s) => (s ?? '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -9,7 +9,7 @@ const pt = new Intl.Collator('pt-BR', { sensitivity: 'base' });
 const fmtAno = (a) => (a == null ? '' : a < 0 ? `${-a} a.C.` : String(a));
 
 /* =====================================================
-   LINKS: YouTube e PDF
+   LINKS: YouTube
    ===================================================== */
 
 // YouTube: aceita youtube.com/watch?v=, youtu.be/ e youtube.com/embed/
@@ -18,16 +18,7 @@ function idYoutube(url) {
   return m ? m[1] : null;
 }
 
-// Converte link do Drive ou arquivo .pdf em endereço que pode ser exibido na página
-function urlPreviaPdf(url) {
-  if (!url) return null;
-  const drive = url.match(/drive\.google\.com\/file\/d\/([\w-]+)/);
-  if (drive) return `https://drive.google.com/file/d/${drive[1]}/preview`;
-  if (/\.pdf(\?|#|$)/i.test(url)) return url;
-  return null;
-}
-
-// Troca a capa do vídeo pelo player do YouTube (usado na aula e na janela de detalhe)
+// Troca a capa do vídeo pelo player do YouTube
 function carregarVideo(container, id) {
   container.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen title="Vídeo"></iframe>`;
 }
@@ -35,18 +26,35 @@ function carregarVideo(container, id) {
 /* =====================================================
    ABAS
    ===================================================== */
-document.querySelectorAll('[data-aba]').forEach((b) => b.addEventListener('click', () => {
-  const alvo = b.dataset.aba;
-  document.querySelectorAll('[data-aba]').forEach((x) => x.classList.toggle('on', x === b));
+function mostrarAba(alvo) {
+  document.querySelectorAll('[data-aba]').forEach((x) => x.classList.toggle('on', x.dataset.aba === alvo));
   $('#view-curso').hidden = alvo !== 'curso';
   $('#view-biblioteca').hidden = alvo !== 'biblioteca';
-}));
+}
+
+document.querySelectorAll('[data-aba]').forEach((b) =>
+  b.addEventListener('click', () => mostrarAba(b.dataset.aba)));
+
+/* =====================================================
+   CONFIGURAÇÃO
+   config.json: { "curso": true } mostra a aba Curso; false esconde
+   ===================================================== */
+fetch('config.json')
+  .then((r) => r.json())
+  .catch(() => ({ curso: false }))
+  .then((cfg) => {
+    if (cfg.curso !== true) return;
+    $('[data-aba="curso"]').hidden = false;
+    carregarCurso();
+    mostrarAba('curso');
+  });
 
 /* =====================================================
    CURSO
    Estrutura: módulos > aulas. Cada aula é "texto", "video" ou "pdf".
    ===================================================== */
 let aulasPlanas = [];   // ordem linear para anterior/próxima
+let cursoCarregado = false;
 
 const ICONE = { texto: 'Texto', video: 'Vídeo', pdf: 'PDF' };
 
@@ -94,10 +102,8 @@ function mostrarAula(chave) {
       corpo = `<p class="pendente">Link do vídeo ainda não adicionado.</p>`;
     }
   } else if (aula.tipo === 'pdf') {
-    const pdf = urlPreviaPdf(aula.url);
     if (aula.url) {
       corpo = `
-        ${pdf ? `<div class="previa pdf"><iframe src="${esc(pdf)}" title="${esc(aula.titulo)}" loading="lazy"></iframe></div>` : ''}
         <a class="botao-grande" href="${esc(aula.url)}" target="_blank" rel="noopener">
           <span>abrir PDF em tela cheia</span><span aria-hidden="true">→</span>
         </a>`;
@@ -133,16 +139,20 @@ $('#aula').addEventListener('click', (e) => {
   if (seta) mostrarAula(seta.dataset.id);
 });
 
-fetch('curso.json')
-  .then((r) => r.json())
-  .then((modulos) => {
-    aulasPlanas = modulos.flatMap((m) =>
-      m.aulas.map((a) => ({ chave: `${m.id}-${a.id}`, aula: a, modulo: m })));
-    renderTrilha(modulos);
-    const pedida = location.hash.slice(1);
-    mostrarAula(aulasPlanas.some((x) => x.chave === pedida) ? pedida : aulasPlanas[0]?.chave);
-  })
-  .catch(() => { $('#curso-erro').hidden = false; });
+function carregarCurso() {
+  if (cursoCarregado) return;
+  cursoCarregado = true;
+  fetch('curso.json')
+    .then((r) => r.json())
+    .then((modulos) => {
+      aulasPlanas = modulos.flatMap((m) =>
+        m.aulas.map((a) => ({ chave: `${m.id}-${a.id}`, aula: a, modulo: m })));
+      renderTrilha(modulos);
+      const pedida = location.hash.slice(1);
+      mostrarAula(aulasPlanas.some((x) => x.chave === pedida) ? pedida : aulasPlanas[0]?.chave);
+    })
+    .catch(() => { $('#curso-erro').hidden = false; });
+}
 
 /* =====================================================
    BIBLIOTECA
@@ -195,6 +205,7 @@ function chips(grupo, campo, valores, atual) {
     `<button class="chip${atual === v ? ' on' : ''}" data-campo="${campo}" data-v="${esc(v)}">${esc(v)} <span>${n}</span></button>`).join('');
   return `<div class="grupo-filtro"><span class="rotulo-filtro">${grupo}</span><div class="chips">${todos}${itens}</div></div>`;
 }
+
 function renderFiltros() {
   const temas = [...contar('tema')].sort((a, b) => pt.compare(a[0], b[0]));
   const tipos = [...contar('tipo')].sort((a, b) => pt.compare(a[0], b[0]));
@@ -268,26 +279,16 @@ $('#paginacao').addEventListener('click', (e) => {
 function abrirDetalhe(o) {
   const descricao = esc(o.descricao || '').replace(/\n\s*\n/g, '<br><br>').replace(/\n/g, '<br>');
   const yt = idYoutube(o.link);
-  const pdf = urlPreviaPdf(o.link);
 
-  let previa = '';
-  if (yt) {
-    previa = `
-      <div class="previa" id="previa-obra">
-        <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="">
-        <button type="button" class="play" data-yt="${yt}">▶ assistir aqui</button>
-      </div>`;
-  } else if (pdf) {
-    previa = `
-      <div class="previa pdf">
-        <iframe src="${esc(pdf)}" title="${esc(o.titulo)}" loading="lazy"></iframe>
-      </div>`;
-  }
+  const previa = yt ? `
+    <div class="previa" id="previa-obra">
+      <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="">
+      <button type="button" class="play" data-yt="${yt}">▶ assistir aqui</button>
+    </div>` : '';
 
-  const rotuloBotao = yt ? 'abrir no YouTube' : pdf ? 'abrir PDF em tela cheia' : 'abrir obra';
   const botao = o.link ? `
     <a class="botao-grande" href="${esc(o.link)}" target="_blank" rel="noopener">
-      <span>${rotuloBotao}</span>
+      <span>${yt ? 'abrir no YouTube' : 'abrir'}</span>
       <span aria-hidden="true">→</span>
     </a>` : '';
 
