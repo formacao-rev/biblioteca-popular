@@ -8,6 +8,7 @@
     "tipo": "Livro",
     "idioma": "Português",
     "tags": ["coleção primeiros passos", "marxismo", "dialética"],
+    "capa": "capas/Gemini_Generated_Image_ap2b7uap2b7uap2b.jpeg",
     "link": "https://drive.google.com/file/d/14JTHIxvAHHhar1wAld6mkvO3GTXEkZ8C/view?usp=sharing",
     "destaque": true
   },
@@ -19,6 +20,7 @@
     "subtema": "Introdução ao Direito",
     "tipo": "Livro",
     "idioma": "Português",
+    "capa": "capas/Gemini_Generated_Image_sv9yarsv9yarsv9y.jpeg",
     "tags": ["coleção primeiros passos", "direito", "roberto lyra filho", "dialética"],
     "link": "https://drive.google.com/file/d/1UBKgJVReze-peAG52BDLNIXiWWAsqy7S/view?usp=sharing"
   },
@@ -66,7 +68,7 @@
     "tipo": "Livro",
     "idioma": "Português",
     "tags": ["materialismo", "história"],
-      "capa": "capas/papeldoindividuo.png",
+    "capa": "capas/papeldoindividuo.png",
     "link": "https://drive.google.com/file/d/1m8UiRsgvJuR6ueKgc_4LpFoC1UViEFGW/view?usp=sharing",
     "destaque": true
   },
@@ -78,6 +80,7 @@
     "subtema": "Textos clássicos",
     "tipo": "Panfleto",
     "idioma": "Português",
+    "capa": "capas/manifesto.jpg",
     "tags": ["luta de classes"],
     "link": "https://drive.google.com/file/d/1Nup38j3BYw7KGz0JC4t5PxKYhHyw1oeL/view?usp=sharing",
     "destaque": true
@@ -173,6 +176,7 @@
     "tema": "Marxismo",
     "subtema": "Revolução Russa",
     "tipo": "Livro",
+    "capa": "capas/leninrevolucao.jpg",
     "idioma": "Português",
     "tags": ["Lenin", "Revolução de Outubro"],
     "link": "https://drive.google.com/file/d/19ACJOYikVz7BuUbPwRHA_D7DGsXNnJ4A/view?usp=sharing"
@@ -195,6 +199,7 @@
     "tema": "Marxismo",
     "subtema": "Revolução Chinesa",
     "tipo": "Livro",
+    "capa": "capas/maotransicao.png",
     "idioma": "Português",
     "tags": ["Mao Zedong", "Revolução Chinesa", "transição ao socialismo"],
     "link": "https://drive.google.com/file/d/1MJ4SMc2t0NgQ5Qva35yQrx2DZoC96gNA/view?usp=sharing"
@@ -212,9 +217,10 @@
   },
   {
     "titulo": "A questão palestina: guerra, política e relações internacionais",
-    "autor": "(verificar)",
+    "autor": "Marcelo Buzetto",
     "ano": 2015,
     "tema": "Política internacional",
+    "capa": "capas/questaopalestina.jpg",
     "subtema": "Oriente Médio",
     "tipo": "Livro",
     "idioma": "Português",
@@ -229,6 +235,7 @@
     "subtema": "Economia política",
     "tipo": "Livro",
     "idioma": "Português",
+    "capa": "capas/dicionario.png",
     "tags": ["dicionário", "economia política"],
     "link": "https://drive.google.com/file/d/1l48sXwPLVyldYZSkGh1kK_Kd-A2ACgR1/view?usp=sharing"
   },
@@ -250,6 +257,7 @@
     "tema": "Política",
     "subtema": "América Latina",
     "tipo": "Livro",
+    "capa": "capas/desafiosdaesquerda.jpg",
     "idioma": "Português",
     "tags": ["esquerda", "América Latina"],
     "link": "https://drive.google.com/file/d/1DEAC-_ipMcM5e4smnvzQtYNF5J-XOYww/view?usp=sharing"
@@ -261,6 +269,7 @@
     "tema": "Política",
     "subtema": "América Latina",
     "tipo": "Livro",
+    "capa": "capas/americalatinaencruzilhada.png",
     "idioma": "Português",
     "tags": ["América Latina", "geopolítica"],
     "link": "https://drive.google.com/file/d/1N4AEPkQbK7LUwDGBxhmzMHW7HtD0j1j3/view?usp=sharing"
@@ -271,6 +280,7 @@
     "ano": 1886,
     "tema": "Marxismo",
     "subtema": "Questão da mulher",
+    "capa": "capas/questaodamulher.jpg",
     "tipo": "Livro",
     "idioma": "Português",
     "tags": ["mulher", "feminismo socialista"],
@@ -282,6 +292,7 @@
     "ano": 2013,
     "tema": "Arte e cultura",
     "subtema": "Estética marxista",
+    "capa": "capas/marxistasarte.png",
     "tipo": "Livro",
     "idioma": "Português",
     "tags": ["Konder", "arte", "estética"],
@@ -292,6 +303,7 @@
     "autor": "Giörgy Lukács",
     "ano": 1968,
     "tema": "Arte e cultura",
+    "capa": "capas/marxismoliteratura.png",
     "subtema": "Teoria da literatura",
     "tipo": "Livro",
     "idioma": "Português",
@@ -306,6 +318,7 @@
     "subtema": "Revolução",
     "tipo": "Livro",
     "idioma": "Português",
+    "capa": "capas/revolucaocultura",
     "tags": ["arte", "cultura", "revolução"],
     "link": "https://drive.google.com/file/d/1UJsSUn9JOLZAZpVwsY4oIIIZ-u4ZDvII/view?usp=sharing"
   },
@@ -316,6 +329,7 @@
     "tema": "Marxismo",
     "subtema": "Teoria da dependência",
     "tipo": "Livro",
+    "capa": "capas/ruymauro.png",
     "idioma": "Português",
     "tags": ["Marini", "dependência", "América Latina"],
     "link": "https://drive.google.com/file/d/1GHXzilOjyldjZD_OjtvRQ_6KviuXR7S_/view?usp=sharing"
@@ -350,6 +364,7 @@
     "subtema": "Socialismo",
     "tipo": "Livro",
     "idioma": "Português",
+    "capa": "capas/socialismocomoalternativa.jpg",
     "tags": ["socialismo"],
     "link": "https://drive.google.com/file/d/1k6rINZU9FnGZWJ9NOs2ovH9lztW9ONSt/view?usp=sharing"
   },
@@ -360,6 +375,7 @@
     "tema": "Economia",
     "subtema": "Questão agrária",
     "tipo": "Livro",
+    "capa": "capas/aquestaoagraria.jpg",
     "idioma": "Português",
     "tags": ["questão agrária", "Nordeste", "Brasil"],
     "link": "https://drive.google.com/file/d/1X088RRh3qvhOFMDYtXEpE-hsnA2wEGGr/view?usp=sharing"
