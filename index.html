@@ -3,28 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Sem nome por enquanto: este título só aparece na aba do navegador. Troque quando tiver um. -->
   <title>Biblioteca</title>
   <link rel="icon" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <!-- o ?v=6 força o navegador a baixar o CSS de novo; some 1 a cada atualização -->
-  <link rel="stylesheet" href="style.css?v=8">
+  <!-- o ?v=10 força o navegador a baixar o CSS de novo; some 1 a cada atualização -->
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 
   <header class="topo">
     <img class="marca" src="logo.png" alt="">
     <nav class="abas" aria-label="Seções">
-      <button class="aba on" type="button" data-aba="curso">Curso</button>
-      <button class="aba" type="button" data-aba="biblioteca">Biblioteca</button>
+      <button class="aba" type="button" data-aba="curso" hidden>Curso</button>
+      <button class="aba on" type="button" data-aba="biblioteca">Biblioteca</button>
     </nav>
   </header>
 
   <main>
-    <!-- ===== CURSO ===== -->
-    <section id="view-curso" class="view">
+    <!-- ===== CURSO (aparece só se config.json tiver "curso": true) ===== -->
+    <section id="view-curso" class="view" hidden>
       <div class="curso">
         <aside class="trilha" aria-label="Módulos e aulas">
           <div id="trilha"></div>
@@ -36,7 +35,7 @@
     </section>
 
     <!-- ===== BIBLIOTECA ===== -->
-    <section id="view-biblioteca" class="view" hidden>
+    <section id="view-biblioteca" class="view">
       <div class="cabeca-bib">
         <input id="busca" type="search" placeholder="buscar título, autor ou assunto" autocomplete="off">
         <label class="ordem">
@@ -50,9 +49,9 @@
       </div>
 
       <details class="painel-filtros">
-  <summary>filtros <span id="ativos-filtros"></span></summary>
-  <div class="filtros-bib" id="filtros"></div>
-</details>
+        <summary>filtros <span id="ativos-filtros"></span></summary>
+        <div class="filtros-bib" id="filtros"></div>
+      </details>
 
       <p id="contagem" class="contagem"></p>
       <ul id="grade" class="grade"></ul>
@@ -67,6 +66,6 @@
     <div id="detalhe-corpo"></div>
   </dialog>
 
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=10"></script>
 </body>
 </html>
