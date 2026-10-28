@@ -304,7 +304,7 @@
   },
   {
     "titulo": "Marxismo e teoria da literatura",
-    "autor": "Giörgy Lukács",
+    "autor": "György Lukács",
     "ano": 1968,
     "tema": "Arte e cultura",
     "capa": "capas/marxismoliteratura.png",
@@ -322,7 +322,7 @@
     "subtema": "Revolução",
     "tipo": "Livro",
     "idioma": "Português",
-    "capa": "capas/revolucaocultura",
+    "capa": "capas/revolucaocultura.png",
     "tags": ["arte", "cultura", "revolução"],
     "link": "https://drive.google.com/file/d/1UJsSUn9JOLZAZpVwsY4oIIIZ-u4ZDvII/view?usp=sharing"
   },
