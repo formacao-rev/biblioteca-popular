@@ -230,13 +230,18 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
 /* Recolhedor de filtros da biblioteca */
 .painel-filtros { margin-bottom: 18px; }
 .painel-filtros summary {
-  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px; border-radius: 999px; background: var(--superficie);
-  font-size: 13px; color: var(--suave);
+  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 10px;
+  padding: 8px 16px 8px 14px; border-radius: 999px; background: var(--superficie);
+  font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--suave);
 }
 .painel-filtros summary::-webkit-details-marker { display: none; }
-.painel-filtros summary::after { content: '▸'; color: var(--acento); }
-.painel-filtros[open] summary::after { content: '▾'; }
+.painel-filtros summary::before {
+  content: '+'; display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%; background: var(--superficie-2);
+  color: var(--acento); font-size: 14px; line-height: 1;
+}
+.painel-filtros[open] summary::before { content: '–'; }
 .painel-filtros summary:hover { color: var(--texto); }
-#ativos-filtros { color: var(--acento); }
+#ativos-filtros { color: var(--acento); text-transform: none; letter-spacing: 0; }
 .painel-filtros .filtros-bib { margin-top: 14px; }
