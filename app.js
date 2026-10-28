@@ -195,7 +195,6 @@ function chips(grupo, campo, valores, atual) {
     `<button class="chip${atual === v ? ' on' : ''}" data-campo="${campo}" data-v="${esc(v)}">${esc(v)} <span>${n}</span></button>`).join('');
   return `<div class="grupo-filtro"><span class="rotulo-filtro">${grupo}</span><div class="chips">${todos}${itens}</div></div>`;
 }
-
 function renderFiltros() {
   const temas = [...contar('tema')].sort((a, b) => pt.compare(a[0], b[0]));
   const tipos = [...contar('tipo')].sort((a, b) => pt.compare(a[0], b[0]));
@@ -205,6 +204,10 @@ function renderFiltros() {
     chips('assunto', 'tema', temas, S.tema) +
     chips('tipo', 'tipo', tipos, S.tipo) +
     chips('época', 'periodo', periodos, S.periodo);
+
+  // mostra quantos filtros estão ativos no título do recolhedor
+  const ativos = ['tema', 'tipo', 'periodo'].filter((k) => S[k]).length;
+  $('#ativos-filtros').textContent = ativos ? `· ${ativos} ativo${ativos > 1 ? 's' : ''}` : '';
 }
 
 function cardHTML(o) {
