@@ -59,16 +59,19 @@ function aplicarConfig() {
   }
   $('[data-aba="curso"]').hidden = CONFIG.curso !== true;
   $('[data-aba="biblioteca"]').hidden = CONFIG.biblioteca === false;
+  $('[data-aba="publicacoes"]').hidden = CONFIG.publicacoes !== true;
 }
 
 function mostrarAba(alvo) {
   document.querySelectorAll('[data-aba]').forEach((b) => b.classList.toggle('on', b.dataset.aba === alvo));
   $('#view-curso').hidden = alvo !== 'curso';
   $('#view-biblioteca').hidden = alvo !== 'biblioteca';
-  // na aba Curso some a barra lateral e a busca
-  $('#barra').hidden = alvo === 'curso';
-  $('#busca').hidden = alvo === 'curso';
-  $('.site').classList.toggle('so-conteudo', alvo === 'curso');
+  $('#view-publicacoes').hidden = alvo !== 'publicacoes';
+  // Curso e Publicações não usam a barra lateral nem a busca
+  const semBarra = alvo === 'curso' || alvo === 'publicacoes';
+  $('#barra').hidden = semBarra;
+  $('#busca').hidden = semBarra;
+  $('.site').classList.toggle('so-conteudo', semBarra);
 }
 
 document.querySelectorAll('[data-aba]').forEach((b) =>
@@ -452,9 +455,91 @@ fetch('config.json')
     return Promise.all([
       carregarObras(),
       CONFIG.curso === true ? carregarCurso() : null,
+      CONFIG.publicacoes === true ? carregarPublicacoes() : null,
     ]);
   })
   .then(() => {
-    const soCurso = CONFIG.curso === true && CONFIG.biblioteca === false;
-    mostrarAba(soCurso ? 'curso' : 'biblioteca');
+    if (CONFIG.biblioteca !== false) mostrarAba('biblioteca');
+    else if (CONFIG.publicacoes === true) mostrarAba('publicacoes');
+    else mostrarAba('curso');
   });
+
+/* =====================================================
+   PUBLICAÇÕES
+   publicacoes.json · feed de textos, imagens e links
+   ===================================================== */
+const TIPOS_PUB = ['Jornal', 'Canal', 'Ordem de leitura', 'Matéria', 'Texto de seguidor'];
+let publicacoes = [];
+let tipoPub = '';
+
+function carregarPublicacoes() {
+  return fetch('publicacoes.json')
+    .then((r) => r.json())
+    .then((dados) => {
+      publicacoes = dados;
+      renderFeed();
+    })
+    .catch(() => {
+      $('#feed-vazio').hidden = false;
+      $('#feed-vazio').textContent = 'Não foi possível carregar publicacoes.json.';
+    });
+}
+
+function dataExtensa(iso) {
+  if (!iso) return '';
+  const d = new Date(`${iso}T12:00:00`);
+  return isNaN(d) ? iso : d.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function renderFiltrosPub() {
+  const presentes = [...new Set(publicacoes.map((p) => p.tipo).filter(Boolean))];
+  const ordem = [
+    ...TIPOS_PUB.filter((t) => presentes.includes(t)),
+    ...presentes.filter((t) => !TIPOS_PUB.includes(t)).sort((a, b) => pt.compare(a, b)),
+  ];
+  const chip = (v, rotulo) =>
+    `<button class="chip${tipoPub === v ? ' on' : ''}" type="button" data-tipo="${esc(v)}">${esc(rotulo)}</button>`;
+  $('#filtros-pub').innerHTML = chip('', 'todas') + ordem.map((t) => chip(t, t)).join('');
+}
+
+function cardPub(p) {
+  const paragrafos = (p.texto || '').split(/\n\s*\n/)
+    .map((t) => `<p>${esc(t.trim())}</p>`).join('');
+  const imagem = p.imagem
+    ? `<img class="pub-imagem" src="${esc(p.imagem)}" alt="" loading="lazy" onerror="this.remove()">`
+    : '';
+  const link = p.link
+    ? `<a class="pub-link" href="${esc(p.link)}" target="_blank" rel="noopener">abrir link →</a>`
+    : '';
+  const meta = [p.autor, dataExtensa(p.data)].filter(Boolean).map(esc).join(' · ');
+  return `
+    <article class="pub${p.destaque ? ' destaque' : ''}">
+      <header class="pub-topo">
+        <span class="pub-tipo">${esc(p.tipo || '')}</span>
+        ${p.fixada ? '<span class="pub-fixada">fixada</span>' : ''}
+      </header>
+      <h2 class="pub-titulo">${esc(p.titulo)}</h2>
+      <p class="pub-meta">${meta}</p>
+      ${imagem}
+      <div class="pub-texto">${paragrafos}</div>
+      ${link}
+    </article>`;
+}
+
+function renderFeed() {
+  renderFiltrosPub();
+  const lista = publicacoes
+    .filter((p) => !tipoPub || p.tipo === tipoPub)
+    .sort((a, b) =>
+      (b.fixada === true) - (a.fixada === true) ||
+      String(b.data || '').localeCompare(String(a.data || '')));
+  $('#feed').innerHTML = lista.map(cardPub).join('');
+  $('#feed-vazio').hidden = lista.length > 0;
+}
+
+$('#filtros-pub').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-tipo]');
+  if (!b) return;
+  tipoPub = b.dataset.tipo;
+  renderFeed();
+});

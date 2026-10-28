@@ -22,6 +22,7 @@
       <nav class="abas" aria-label="Seções">
         <button class="aba" type="button" data-aba="curso" hidden>Curso</button>
         <button class="aba on" type="button" data-aba="biblioteca">Biblioteca</button>
+        <button class="aba" type="button" data-aba="publicacoes" hidden>Publicações</button>
       </nav>
       <input id="busca" type="search" placeholder="buscar título, autor ou assunto" autocomplete="off">
     </div>
@@ -95,6 +96,13 @@
         <ul id="grade" class="grade"></ul>
         <p id="vazio" class="aviso" hidden>Nenhuma obra encontrada com esses filtros.</p>
         <nav class="paginacao" id="paginacao" aria-label="Páginas"></nav>
+      </section>
+
+      <!-- ===== PUBLICAÇÕES ===== -->
+      <section id="view-publicacoes" class="view" hidden>
+        <div class="filtros-pub" id="filtros-pub"></div>
+        <div id="feed" class="feed"></div>
+        <p id="feed-vazio" class="aviso" hidden>Nenhuma publicação ainda.</p>
       </section>
 
     </main>
