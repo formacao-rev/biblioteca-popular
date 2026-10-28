@@ -1,3 +1,10 @@
 {
-  "curso": false
+  "curso": false,
+  "biblioteca": true,
+  "nota": "Acervo em construção. Sugestões de leitura e correções são bem-vindas pelo contato ao lado.",
+  "contato": {
+    "email": "formacaorevolucionaria@gmail.com",
+    "instagram": "",
+    "twitter": ""
+  }
 }
