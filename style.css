@@ -215,3 +215,15 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
   letter-spacing: .08em;
 }
 .detalhe .previa.pdf { aspect-ratio: auto; height: 60vh; max-height: none; margin: 4px 0 18px; }
+.botao-grande, .botao-grande:visited {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  margin-top: 6px; padding: 16px 22px; border-radius: 14px; text-decoration: none;
+  background: var(--acento); color: var(--fundo);
+  font-size: 15px; font-weight: 600; transition: background .15s, transform .15s;
+}
+.botao-grande:hover { background: #fff; transform: translateY(-1px); }
+.botao-grande span:last-child { font-size: 20px; transition: transform .15s; }
+.botao-grande:hover span:last-child { transform: translateX(4px); }
+
+/* prévia de PDF mais alta dentro da janela */
+.detalhe .previa.pdf { aspect-ratio: auto; height: 60vh; max-height: none; margin: 4px 0 18px; }
