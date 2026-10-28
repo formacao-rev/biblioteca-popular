@@ -39,7 +39,7 @@
     "titulo": "Módulo 4 · Política e luta de classes",
     "descricao": "Da teoria à prática: o Manifesto e a análise das revoluções.",
     "aulas": [
-      { "id": "1", "titulo": "Manifesto do Partido Comunista", "tipo": "pdf", "url": "", "nota": "1848" },
+      { "id": "1", "titulo": "Manifesto do Partido Comunista", "tipo": "pdf", "url": "https://drive.google.com/file/d/1Nup38j3BYw7KGz0JC4t5PxKYhHyw1oeL/preview", "nota": "1848" },
       { "id": "2", "titulo": "As Lutas de Classes na França de 1848 a 1850", "tipo": "pdf", "url": "", "nota": "1850" },
       { "id": "3", "titulo": "O 18 de Brumário de Luís Bonaparte", "tipo": "pdf", "url": "", "nota": "1852" },
       { "id": "4", "titulo": "A Guerra Civil na França", "tipo": "pdf", "url": "", "nota": "1871" },
