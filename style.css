@@ -227,3 +227,16 @@ main { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
 
 /* prévia de PDF mais alta dentro da janela */
 .detalhe .previa.pdf { aspect-ratio: auto; height: 60vh; max-height: none; margin: 4px 0 18px; }
+/* Recolhedor de filtros da biblioteca */
+.painel-filtros { margin-bottom: 18px; }
+.painel-filtros summary {
+  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 999px; background: var(--superficie);
+  font-size: 13px; color: var(--suave);
+}
+.painel-filtros summary::-webkit-details-marker { display: none; }
+.painel-filtros summary::after { content: '▸'; color: var(--acento); }
+.painel-filtros[open] summary::after { content: '▾'; }
+.painel-filtros summary:hover { color: var(--texto); }
+#ativos-filtros { color: var(--acento); }
+.painel-filtros .filtros-bib { margin-top: 14px; }
