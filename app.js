@@ -222,13 +222,19 @@ function renderFiltros() {
 }
 
 function cardHTML(o) {
+  const capa = o.capa
+    ? `<span class="capa"><img src="${esc(o.capa)}" alt="" loading="lazy" onerror="this.closest('.capa').remove(); this.closest('.card').classList.remove('com-capa')"></span>`
+    : '';
   return `
     <li>
-      <button class="card" type="button" data-i="${o._i}">
-        <span class="card-tipo">${esc((o.tipo || '').toLowerCase())}</span>
-        <span class="card-titulo">${esc(o.titulo)}</span>
-        <span class="card-autor">${esc(o.autor || '')}</span>
-        <span class="card-ano">${esc(fmtAno(o.ano))}</span>
+      <button class="card${o.capa ? ' com-capa' : ''}" type="button" data-i="${o._i}">
+        ${capa}
+        <span class="card-texto">
+          <span class="card-tipo">${esc((o.tipo || '').toLowerCase())}</span>
+          <span class="card-titulo">${esc(o.titulo)}</span>
+          <span class="card-autor">${esc(o.autor || '')}</span>
+          <span class="card-ano">${esc(fmtAno(o.ano))}</span>
+        </span>
       </button>
     </li>`;
 }
@@ -280,6 +286,8 @@ function abrirDetalhe(o) {
   const descricao = esc(o.descricao || '').replace(/\n\s*\n/g, '<br><br>').replace(/\n/g, '<br>');
   const yt = idYoutube(o.link);
 
+  const capa = o.capa ? `<img class="capa-detalhe" src="${esc(o.capa)}" alt="" onerror="this.remove()">` : '';
+
   const previa = yt ? `
     <div class="previa" id="previa-obra">
       <img src="https://img.youtube.com/vi/${yt}/hqdefault.jpg" alt="">
@@ -293,6 +301,7 @@ function abrirDetalhe(o) {
     </a>` : '';
 
   $('#detalhe-corpo').innerHTML = `
+    ${capa}
     <p class="card-tipo">${esc((o.tipo || '').toLowerCase())}</p>
     <h2>${esc(o.titulo)}</h2>
     <p class="det-autor">${esc(o.autor || '')}</p>
